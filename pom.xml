@@ -10,6 +10,8 @@
 
     <modules>
         <module>seckill-common</module>
+        <module>seckill-gateway</module>
+        <module>seckill-user</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -28,7 +30,7 @@
         <maven.compiler.target>8</maven.compiler.target>
         <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
         <java.version>1.8</java.version>
-        <mybatis.version>2.0.1</mybatis.version>
+        <mybatis.version>3.5.0</mybatis.version>
         <mysql.vsersion>8.0.16</mysql.vsersion>
         <druid.version>1.0.5</druid.version>
         <dubbo.version>2.7.1</dubbo.version>
@@ -76,10 +78,10 @@
                 <version>${spring-boot.version}</version>
                 <optional>true</optional>
             </dependency>
-            <!--mybatis-->
+            <!-- mybatis-plus -->
             <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
             <!-- Aapche Dubbo  -->
@@ -157,6 +159,12 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+            </dependency>
+            <!-- spring-data-redis -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
