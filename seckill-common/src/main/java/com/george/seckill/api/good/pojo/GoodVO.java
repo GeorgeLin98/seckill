@@ -1,32 +1,18 @@
 package com.george.seckill.api.good.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
-
 /**
- * @description 秒杀商品PO
+ * @description 商品VO
  * @date 2021.01.13
  * @author linzhuanzge
  */
-@TableName("seckill_goods")
-public class SeckillGoodPO implements Serializable {
-    /**
-     * 主键id
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
-    /**
-     * 商品id
-     */
-    private Long goodsId;
+public class GoodVO extends GoodPO implements Serializable {
     /**
      * 秒杀价格
      */
-    private Double seckillPrice;
+    private BigDecimal seckillPrice;
     /**
      * 秒杀库存
      */
@@ -40,27 +26,11 @@ public class SeckillGoodPO implements Serializable {
      */
     private Date endDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public Double getSeckillPrice() {
+    public BigDecimal getSeckillPrice() {
         return seckillPrice;
     }
 
-    public void setSeckillPrice(Double seckillPrice) {
+    public void setSeckillPrice(BigDecimal seckillPrice) {
         this.seckillPrice = seckillPrice;
     }
 

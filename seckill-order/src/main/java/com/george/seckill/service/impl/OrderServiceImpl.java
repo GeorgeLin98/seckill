@@ -1,6 +1,7 @@
 package com.george.seckill.service.impl;
 
 import com.george.seckill.api.order.service.IOrderService;
+import com.george.seckill.api.user.service.IUserService;
 import org.apache.dubbo.config.annotation.Service;
 
 /**
@@ -8,6 +9,6 @@ import org.apache.dubbo.config.annotation.Service;
  * @author linzhuangze
  * @date 2021.01.12
  */
-@Service
+@Service(interfaceClass = IOrderService.class)
 public class OrderServiceImpl  implements IOrderService {
 }

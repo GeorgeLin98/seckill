@@ -1,7 +1,6 @@
 package com.george.seckill.service.impl;
 
 import com.george.seckill.api.cache.service.IRedisService;
-import com.george.seckill.api.user.service.IUserService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.data.redis.core.RedisTemplate;
 

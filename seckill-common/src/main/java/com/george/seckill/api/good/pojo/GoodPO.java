@@ -1,8 +1,11 @@
 package com.george.seckill.api.good.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @description 商品PO
@@ -14,6 +17,7 @@ public class GoodPO implements Serializable {
     /**
      * 主键id
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 商品名称
@@ -34,7 +38,7 @@ public class GoodPO implements Serializable {
     /**
      * 商品价格
      */
-    private Double goodsPrice;
+    private BigDecimal goodsPrice;
     /**
      * 商品库存
      */
@@ -80,11 +84,11 @@ public class GoodPO implements Serializable {
         this.goodsDetail = goodsDetail;
     }
 
-    public Double getGoodsPrice() {
+    public BigDecimal getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Double goodsPrice) {
+    public void setGoodsPrice(BigDecimal goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 
