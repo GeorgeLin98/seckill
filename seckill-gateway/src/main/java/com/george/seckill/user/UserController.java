@@ -28,7 +28,7 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
-
+    //rpc调用
     @Reference(interfaceClass = IUserService.class)
     IUserService userService;
 

@@ -2,6 +2,8 @@ package com.george.seckill.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.george.seckill.api.cache.service.IRedisService;
+import com.george.seckill.api.cache.util.CacheUtil;
 import com.george.seckill.api.user.pojo.LoginVO;
 import com.george.seckill.api.user.pojo.RegisterVO;
 import com.george.seckill.api.user.pojo.UserPO;
@@ -13,14 +15,13 @@ import com.george.seckill.util.CookieUtil;
 import com.george.seckill.util.MD5Util;
 import com.george.seckill.util.MsgAndCodeEnum;
 import com.george.seckill.util.UUIDUtil;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.util.Date;
 
 /**
@@ -34,8 +35,9 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private UserMapper userMapper;
-    @Resource
-    private RedisTemplate redisTemplate;
+    //rpc调用
+    @Reference(interfaceClass = IRedisService.class)
+    private IRedisService redisService;
 
     @Override
     public void register(RegisterVO userModel) {
@@ -84,7 +86,7 @@ public class UserServiceImpl implements IUserService {
         // 生成cookie
         String cookieId = UUIDUtil.uuid();
         //对象信息存入redis
-        redisTemplate.opsForValue().set(cookieId,userPO);
+        redisService.set(cookieId,userPO, CacheUtil.CACHE_TIME_FOREVER);
         //存入response
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         CookieUtil.writeLoginToken(requestAttributes.getResponse(),cookieId, UserUtil.COOKIE_NAME_TOKEN);

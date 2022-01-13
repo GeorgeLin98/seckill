@@ -12,6 +12,8 @@
         <module>seckill-common</module>
         <module>seckill-gateway</module>
         <module>seckill-user</module>
+        <module>seckill-good</module>
+        <module>seckill-cache</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -36,6 +38,7 @@
         <dubbo.version>2.7.1</dubbo.version>
         <fastjson.version>1.2.38</fastjson.version>
         <top-version>1.0.0</top-version>
+        <commons-pool2.version>2.6.2</commons-pool2.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -165,6 +168,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+            <!-- lettuce pool 连接池 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
