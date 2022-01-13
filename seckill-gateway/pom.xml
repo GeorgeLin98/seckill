@@ -73,10 +73,6 @@
             </exclusions>
             <type>pom</type>
         </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
         <!--rabbitmq依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
