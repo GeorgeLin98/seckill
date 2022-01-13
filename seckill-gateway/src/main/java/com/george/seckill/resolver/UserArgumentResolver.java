@@ -8,6 +8,7 @@ import com.george.seckill.util.CookieUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2021.01.13
  * @author linzhuangze
  */
+@Component
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     //rpc调用

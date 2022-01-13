@@ -1,5 +1,7 @@
 package com.george.seckill.api.user.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,6 +10,7 @@ import java.util.Date;
  * @author linzhuangze
  * @date 2021.01.12
  */
+@TableName("seckill_user")
 public class UserPO implements Serializable {
     /**
      * 主键id
