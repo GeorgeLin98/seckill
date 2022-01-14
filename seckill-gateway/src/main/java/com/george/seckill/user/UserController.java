@@ -47,7 +47,7 @@ public class UserController {
      * @description 注册跳转
      * @return
      */
-    @RequestMapping(value = "doRegister", method = RequestMethod.GET)
+    @RequestMapping(value = "doRegister")
     public String doRegister() {
         logger.info("doRegister()");
         return "register";
@@ -58,7 +58,7 @@ public class UserController {
      * @param
      * @return
      */
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @RequestMapping(value = "register")
     @ResponseBody
     public ResponseVO register(@Valid RegisterVO registerVO) {
         if (registerVO == null) {

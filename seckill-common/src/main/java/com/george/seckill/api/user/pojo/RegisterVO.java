@@ -3,19 +3,20 @@ package com.george.seckill.api.user.pojo;
 import com.george.seckill.validator.IsMobile;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @description 注册VO
  * @date 2021.01.12
  * @author linzhuangze
  */
-public class RegisterVO {
+public class RegisterVO implements Serializable {
     /**
      * 手机号
      */
     @IsMobile
     @NotNull
-    private Long phone;
+    private String phone;
     /**
      * 昵称
      */
@@ -31,11 +32,11 @@ public class RegisterVO {
     @NotNull
     private String password;
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

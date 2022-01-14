@@ -29,6 +29,6 @@ public class SecondKillController {
     @Reference(interfaceClass = ISecondKillService.class)
     ISecondKillService secondKillService;
 
-    @Reference(interfaceClass = IOrderService.class)
-    IOrderService orderService;
+//    @Reference(interfaceClass = IOrderService.class)
+//    IOrderService orderService;
 }

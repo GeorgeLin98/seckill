@@ -24,6 +24,12 @@
         <dependency>
             <groupId>com.george</groupId>
             <artifactId>seckill-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- springboot配置提示 -->
         <dependency>

@@ -1,6 +1,5 @@
 package com.george.seckill.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.george.seckill.api.cache.service.IRedisService;
 import com.george.seckill.api.cache.util.CacheUtil;
@@ -42,14 +41,14 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void register(RegisterVO userModel) {
         // 检查用户是否注册
-        UserPO user = this.getInfoByUsername(userModel.getPhone());
+        UserPO user = this.getInfoByUsername(Long.getLong(userModel.getPhone()));
         // 用户已经注册
         if (user == null) {
             throw new GlobalException(MsgAndCodeEnum.USER_EXIST.getCode(),MsgAndCodeEnum.USER_EXIST.getMsg());
         }
         // 生成UserPO对象
         UserPO newUser = new UserPO();
-        newUser.setPhone(userModel.getPhone());
+        newUser.setPhone(Long.getLong(userModel.getPhone()));
         newUser.setNickname(userModel.getNickname());
         newUser.setHead(userModel.getHead());
         newUser.setSalt(MD5Util.SALT);
@@ -70,7 +69,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void login(LoginVO loginVO) {
-        Long phone = loginVO.getPhone();
+        String phone = loginVO.getMobile();
         String password = loginVO.getPassword();
         //根据帐号从数据库获取用户信息
         UserPO userPO = userMapper.selectById(phone);
