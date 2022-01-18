@@ -1,6 +1,8 @@
 package com.george.seckill.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.george.seckill.api.good.pojo.GoodVO;
+import com.george.seckill.api.good.pojo.SeckillGoodPO;
 import com.george.seckill.api.good.service.IGoodService;
 import com.george.seckill.mapper.GoodMapper;
 import com.george.seckill.mapper.SeckillGoodMapper;
@@ -25,5 +27,18 @@ public class GoodServiceImpl implements IGoodService {
     @Override
     public GoodVO getGoodsVoByGoodsId(long goodId) {
         return goodMapper.getGoodsVoByGoodsId(goodId);
+    }
+
+    @Override
+    public SeckillGoodPO getSeckillGood(long goodId){
+        QueryWrapper<SeckillGoodPO> wrapper = new QueryWrapper<>();
+        wrapper.eq("goods_id",goodId);
+        SeckillGoodPO seckillGoodPO = seckillGoodMapper.selectOne(wrapper);
+        return seckillGoodPO;
+    }
+
+    @Override
+    public void updateSecGoodStock(SeckillGoodPO seckillGoodPO){
+        seckillGoodMapper.updateById(seckillGoodPO);
     }
 }

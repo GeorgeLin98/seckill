@@ -6,7 +6,9 @@ package com.george.seckill.util;
  * @author linzhuangze
  */
 public enum MsgAndCodeEnum {
-
+    /**
+     * 通用模块 5001X
+     */
     SUCCESS(0,"成功"),
     FAIL(500100,"系统异常"),
     BIND_ERROR(500101,"参数校验异常：%s"),
@@ -17,10 +19,15 @@ public enum MsgAndCodeEnum {
     MOBILE_NOT_EXIST(500214, "手机号不存在"),
     PASSWORD_ERROR(500215, "密码错误"),
     USER_EXIST(500216, "用户已经存在，无需重复注册"),
-    REGISTER_FAIL(500218, "注册异常");
-    ;
+    REGISTER_FAIL(500218, "注册异常"),
+    /**
+     * 商品订单模块 5003XX
+     */
+    EMPTY_STOCK(500300,"库存不足"),
+    REPEAT_ERROR(500301,"该商品每人限购一件");
 
-    private MsgAndCodeEnum(int code, String msg) {
+
+    MsgAndCodeEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

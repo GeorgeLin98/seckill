@@ -1,6 +1,7 @@
 package com.george.seckill.api.good.service;
 
 import com.george.seckill.api.good.pojo.GoodVO;
+import com.george.seckill.api.good.pojo.SeckillGoodPO;
 
 import java.util.List;
 
@@ -22,4 +23,18 @@ public interface IGoodService {
      * @return
      */
     GoodVO getGoodsVoByGoodsId(long goodId);
+
+    /**
+     * @description 秒杀商品查询
+     * @param goodId
+     * @return
+     */
+    SeckillGoodPO getSeckillGood(long goodId);
+
+    /**
+     * @description 更新秒杀商品库存
+     * @param seckillGoodPO
+     */
+    void updateSecGoodStock(SeckillGoodPO seckillGoodPO);
+
 }
