@@ -26,7 +26,6 @@ public class CookieUtil {
     //往响应中写cookie
     public static void writeLoginToken(HttpServletResponse response,String token,String cookieName){
         Cookie cookie = new Cookie(cookieName, token);
-        cookie.setDomain(cookieName);
         //将cookie设置在根目录下面
         cookie.setPath("/");
         cookie.setHttpOnly(true);

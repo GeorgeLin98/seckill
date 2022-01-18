@@ -47,11 +47,11 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         }
         //从缓存中查找
         UserPO userPO = redisService.get(cookieId, UserPO.class);
-        //在有效期内从redis获取到key之后，需要将key重新设置一下，从而达到延长有效期的效果
-        if (userPO != null) {
-            redisService.set(cookieId,userPO, CacheUtil.COOKIE_CACHE_TIME);
-            CookieUtil.writeLoginToken(response,cookieId,UserUtil.COOKIE_NAME_TOKEN);
-        }
+//        //在有效期内从redis获取到key之后，需要将key重新设置一下，从而达到延长有效期的效果
+//        if (userPO != null) {
+//            redisService.set(cookieId,userPO, CacheUtil.COOKIE_CACHE_TIME);
+//            CookieUtil.writeLoginToken(response,cookieId,UserUtil.COOKIE_NAME_TOKEN);
+//        }
         return userPO;
     }
 }
