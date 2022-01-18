@@ -4,8 +4,6 @@ import com.george.seckill.api.user.pojo.LoginVO;
 import com.george.seckill.api.user.pojo.RegisterVO;
 import com.george.seckill.api.user.pojo.UserPO;
 
-import javax.validation.Valid;
-
 /**
  * @description 用户service接口
  * @date 2021.01.12
@@ -32,7 +30,7 @@ public interface IUserService {
      * @param loginVO
      * @return
      */
-    void login(LoginVO loginVO);
+    String login(LoginVO loginVO);
 
     /**
      * 根据phone获取用户

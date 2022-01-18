@@ -17,11 +17,14 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "com.george.seckill.mapper")
 public class MybatisPlusConfig {
 
+    /**
+     * @description 接管自动配置的数据源
+     * @return
+     */
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.druid")
     public DataSource returnDruidDataSource() {
-        DruidDataSource druidDataSource = new DruidDataSource();
-        return druidDataSource;
+        return new DruidDataSource();
     }
 
 }

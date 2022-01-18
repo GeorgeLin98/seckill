@@ -7,7 +7,7 @@ package com.george.seckill.api.cache.util;
  */
 public class CacheUtil {
     /**
-     * 缓冲永久时间
+     * Cookie的缓存时间
      */
-    public static final long CACHE_TIME_FOREVER = 0;
+    public static final long COOKIE_CACHE_TIME = 60*60*2;
 }

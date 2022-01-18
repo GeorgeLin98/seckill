@@ -1,10 +1,7 @@
 package com.george.seckill.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.george.seckill.api.good.pojo.GoodPO;
 import com.george.seckill.api.good.pojo.GoodVO;
 import com.george.seckill.api.good.service.IGoodService;
-import com.george.seckill.api.order.service.IOrderService;
 import com.george.seckill.mapper.GoodMapper;
 import com.george.seckill.mapper.SeckillGoodMapper;
 import org.apache.dubbo.config.annotation.Service;

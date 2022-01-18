@@ -6,6 +6,7 @@ import com.george.seckill.api.user.service.IUserService;
 import com.george.seckill.api.user.util.UserUtil;
 import com.george.seckill.exception.GlobalException;
 import com.george.seckill.pojo.ResponseVO;
+import com.george.seckill.util.CookieUtil;
 import com.george.seckill.util.MsgAndCodeEnum;
 import org.apache.dubbo.config.annotation.Reference;
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -74,9 +74,10 @@ public class UserController {
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseVO login(@Valid LoginVO loginVO) {
-        userService.login(loginVO);
+    public ResponseVO<Boolean> login(HttpServletResponse response,@Valid LoginVO loginVO) {
+        String cookie = userService.login(loginVO);
+        CookieUtil.writeLoginToken(response,cookie, UserUtil.COOKIE_NAME_TOKEN);
         // 返回登陆成功
-        return ResponseVO.success();
+        return ResponseVO.success(true);
     }
 }

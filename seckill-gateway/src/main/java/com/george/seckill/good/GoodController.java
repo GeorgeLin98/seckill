@@ -8,7 +8,6 @@ import com.george.seckill.api.user.pojo.UserPO;
 import com.george.seckill.api.user.service.IUserService;
 import com.george.seckill.pojo.ResponseVO;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,13 +38,12 @@ public class GoodController {
      * @return
      */
     @RequestMapping(value = "goodsList")
-    @ResponseBody
     public String goodsList(UserPO user,Model model) {
         // 查询商品列表，用于手动渲染时将商品数据填充到页面
         List<GoodVO> goodsVoList = goodService.listGoodsVo();
         model.addAttribute("goodsList", goodsVoList);
         model.addAttribute("user", user);
-        return "goodList";
+        return "goods_list";
     }
     /**
      * @description 处理商品详情页

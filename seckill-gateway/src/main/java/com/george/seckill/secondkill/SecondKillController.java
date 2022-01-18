@@ -2,7 +2,6 @@ package com.george.seckill.secondkill;
 
 import com.george.seckill.api.cache.service.IRedisService;
 import com.george.seckill.api.good.service.IGoodService;
-import com.george.seckill.api.order.service.IOrderService;
 import com.george.seckill.api.secondkill.service.ISecondKillService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.slf4j.Logger;

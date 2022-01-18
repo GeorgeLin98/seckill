@@ -1,7 +1,5 @@
 package com.george.seckill.api.cache.service;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @description redis缓冲servie接口
  * @date 2021.01.13

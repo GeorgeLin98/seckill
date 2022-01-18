@@ -43,12 +43,12 @@ public class UserServiceImpl implements IUserService {
         // 检查用户是否注册
         UserPO user = this.getInfoByUsername(Long.getLong(userModel.getPhone()));
         // 用户已经注册
-        if (user == null) {
+        if (user != null) {
             throw new GlobalException(MsgAndCodeEnum.USER_EXIST.getCode(),MsgAndCodeEnum.USER_EXIST.getMsg());
         }
         // 生成UserPO对象
         UserPO newUser = new UserPO();
-        newUser.setPhone(Long.getLong(userModel.getPhone()));
+        newUser.setPhone(Long.valueOf(userModel.getPhone()));
         newUser.setNickname(userModel.getNickname());
         newUser.setHead(userModel.getHead());
         newUser.setSalt(MD5Util.SALT);
@@ -68,11 +68,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void login(LoginVO loginVO) {
+    public String login(LoginVO loginVO) {
         String phone = loginVO.getMobile();
         String password = loginVO.getPassword();
         //根据帐号从数据库获取用户信息
-        UserPO userPO = userMapper.selectById(phone);
+        UserPO userPO = userMapper.selectOne(new QueryWrapper<UserPO>().eq("phone", phone));
         // 缓存中、数据库中都不存在该用户信息，直接返回
         if (userPO == null)
             throw new GlobalException(MsgAndCodeEnum.MOBILE_NOT_EXIST.getCode(),MsgAndCodeEnum.MOBILE_NOT_EXIST.getMsg());
@@ -85,10 +85,8 @@ public class UserServiceImpl implements IUserService {
         // 生成cookie
         String cookieId = UUIDUtil.uuid();
         //对象信息存入redis
-        redisService.set(cookieId,userPO, CacheUtil.CACHE_TIME_FOREVER);
-        //存入response
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        CookieUtil.writeLoginToken(requestAttributes.getResponse(),cookieId, UserUtil.COOKIE_NAME_TOKEN);
+        redisService.set(cookieId,userPO, CacheUtil.COOKIE_CACHE_TIME);
+        return cookieId;
     }
 
     @Override

@@ -30,9 +30,9 @@ public class CookieUtil {
         //将cookie设置在根目录下面
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        //设置cookie的有效期，单位是秒(一年)
+        //设置cookie的有效期，单位是秒(两小时)
         //如果这个maxage不设置的话，cookie就不会写入硬盘，而是写在内存。只在当前页面有效。
-        cookie.setMaxAge(60*60*24*365);
+        cookie.setMaxAge(60*60*2);
         response.addCookie(cookie);
     }
 

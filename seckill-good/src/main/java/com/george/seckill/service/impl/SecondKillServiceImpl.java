@@ -1,6 +1,5 @@
 package com.george.seckill.service.impl;
 
-import com.george.seckill.api.good.service.IGoodService;
 import com.george.seckill.api.secondkill.service.ISecondKillService;
 import org.apache.dubbo.config.annotation.Service;
 

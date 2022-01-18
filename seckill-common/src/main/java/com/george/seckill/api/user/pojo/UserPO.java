@@ -1,5 +1,8 @@
 package com.george.seckill.api.user.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -15,6 +18,7 @@ public class UserPO implements Serializable {
     /**
      * 主键id
      */
+    @TableId(type = IdType.AUTO)
     private Long uuid;
     /**
      * 帐号：手机号

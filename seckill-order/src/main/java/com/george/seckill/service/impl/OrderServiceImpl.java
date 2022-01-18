@@ -1,7 +1,6 @@
 package com.george.seckill.service.impl;
 
 import com.george.seckill.api.order.service.IOrderService;
-import com.george.seckill.api.user.service.IUserService;
 import org.apache.dubbo.config.annotation.Service;
 
 /**

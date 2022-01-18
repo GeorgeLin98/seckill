@@ -7,9 +7,9 @@ package com.george.seckill.util;
  */
 public enum MsgAndCodeEnum {
 
-    SUCCESS(200,"成功"),
-    FAIL(500,"系统异常"),
-    BIND_ERROR(5001,"参数校验异常：%s"),
+    SUCCESS(0,"成功"),
+    FAIL(500100,"系统异常"),
+    BIND_ERROR(500101,"参数校验异常：%s"),
     /**
      * 用户模块 5002XX
      */
