@@ -43,7 +43,7 @@ public class SecondKillController {
     @Reference(interfaceClass = IOrderService.class)
     IOrderService orderService;
 
-    @RequestMapping(value = "doSeckill", method = RequestMethod.POST)
+    @RequestMapping(value = "doSeckill")
     public String doSeckill(Model model, UserPO user, long goodsId) {
         if(null == user){
             return "login";
