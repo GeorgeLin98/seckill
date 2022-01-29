@@ -34,6 +34,7 @@ public class SecondKillServiceImpl implements ISecondKillService {
         //更新秒杀商品库存
         SeckillGoodPO seckillGood = goodService.getSeckillGood(goodVO.getId());
         SeckillGoodPO seckillGoodPO = new SeckillGoodPO();
+        seckillGoodPO.setId(seckillGood.getId());
         seckillGoodPO.setGoodsId(goodVO.getId());
         seckillGoodPO.setStockCount(seckillGood.getStockCount()-1);
         goodService.updateSecGoodStock(seckillGoodPO);

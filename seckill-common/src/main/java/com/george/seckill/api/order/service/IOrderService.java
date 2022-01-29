@@ -28,4 +28,11 @@ public interface IOrderService {
      * @param seckillGood
      */
     void insertSeckillOrder(SeckillOrderPO seckillGood);
+
+    /**
+     * @description 获取订单详情
+     * @param orderId
+     * @return
+     */
+    OrderPO getOrderById(long orderId);
 }

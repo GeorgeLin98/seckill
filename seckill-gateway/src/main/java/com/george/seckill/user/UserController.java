@@ -80,4 +80,17 @@ public class UserController {
         // 返回登陆成功
         return ResponseVO.success(true);
     }
+
+    /**
+     * @description 批量用户登录返回token接口
+     * @return
+     */
+    @RequestMapping(value = "batchLogin", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseVO<String> batchLogin(HttpServletResponse response,@Valid LoginVO loginVO) {
+        String cookie = userService.login(loginVO);
+        CookieUtil.writeLoginToken(response,cookie, UserUtil.COOKIE_NAME_TOKEN);
+        // 返回登陆成功
+        return ResponseVO.success(cookie);
+    }
 }

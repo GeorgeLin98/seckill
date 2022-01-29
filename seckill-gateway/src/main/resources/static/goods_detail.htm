@@ -95,10 +95,11 @@
             },
             success: function (data) {
                 if (data.code == 0) {
-                    var path = dat
-                    a.data;// 获取服务端返回的秒杀地址
+                    // var path = dat
+                    // a.data;// 获取服务端返回的秒杀地址
                     // doSeckill(path);// 真正做秒杀的接口
-                    getSkResult($("#goodsId").val());
+                    // getSkResult($("#goodsId").val());
+                    window.location.href = "/order_detail.htm?orderId=" + data.data;
                 } else {
                     layer.msg(data.msg);
                 }

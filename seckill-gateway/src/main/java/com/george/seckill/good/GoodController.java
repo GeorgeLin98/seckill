@@ -1,19 +1,27 @@
 package com.george.seckill.good;
 
-import com.george.seckill.api.good.GoodUtil;
+import com.george.seckill.api.cache.service.IRedisService;
+import com.george.seckill.api.cache.util.CacheUtil;
+import com.george.seckill.api.good.util.GoodUtil;
 import com.george.seckill.api.good.pojo.GoodDetailVO;
 import com.george.seckill.api.good.pojo.GoodVO;
 import com.george.seckill.api.good.service.IGoodService;
 import com.george.seckill.api.user.pojo.UserPO;
 import com.george.seckill.api.user.service.IUserService;
 import com.george.seckill.pojo.ResponseVO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -31,6 +39,11 @@ public class GoodController {
     //RPC调用
     @Reference(interfaceClass = IGoodService.class)
     private IGoodService goodService;
+    //因为在redis缓存中不存页面缓存时需要手动渲染，所以注入一个视图解析器，自定义渲染
+    @Autowired
+    ThymeleafViewResolver thymeleafViewResolver;
+    @Reference(interfaceClass = IRedisService.class)
+    IRedisService redisService;
 
     /**
      * @description 商品首页
@@ -38,12 +51,25 @@ public class GoodController {
      * @return
      */
     @RequestMapping(value = "goodsList")
-    public String goodsList(UserPO user,Model model) {
+    @ResponseBody
+    public String goodsList(HttpServletRequest request,HttpServletResponse response, UserPO user, Model model) {
+        // 从redis缓存中取html
+        String html = redisService.get(GoodUtil.GOOD_LIST_KEY,String.class);
+        if (!StringUtils.isEmpty(html)){
+            return html;
+        }
         // 查询商品列表，用于手动渲染时将商品数据填充到页面
         List<GoodVO> goodsVoList = goodService.listGoodsVo();
         model.addAttribute("goodsList", goodsVoList);
         model.addAttribute("user", user);
-        return "goods_list";
+        //渲染html
+        WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
+        // (第一个参数为渲染的html文件名，第二个为web上下文：里面封装了web应用的上下文)
+        html = thymeleafViewResolver.getTemplateEngine().process("goods_list", webContext);
+        // 如果html文件不为空，则将页面缓存在redis中
+        if (!StringUtils.isEmpty(html))
+            redisService.set(GoodUtil.GOOD_LIST_KEY, html, CacheUtil.DEFAULT_CACHE_TIME);
+        return html;
     }
     /**
      * @description 处理商品详情页

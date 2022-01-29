@@ -6,7 +6,6 @@ import com.george.seckill.api.user.pojo.UserPO;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
@@ -34,11 +33,11 @@ public class UserUtil {
         List<UserPO> users = generateUserList(count);
         // 将用户信息插入数据库，以便在后面模拟用户登录时可以找到该用户，从而可以生成token返会给客户端，然后保存到文件中用于压测
         // 首次生成数据库信息的时候需要调用这个方法，非首次需要注释掉
-        // insertUserToDB(users);
+         insertUserToDB(users);
         // 模拟用户登录，生成token
         System.out.println("start to login...");
-        String urlString = "http://localhost:8080/login/create_token";
-        File file = new File("E:\\JavaProject\\Web\\seckill\\tokens.txt");
+        String urlString = "http://localhost:7070/user/batchLogin";
+        File file = new File("D:\\FileFloder\\tokens.txt");
         if (file.exists()) {
             file.delete();
         }
@@ -57,7 +56,6 @@ public class UserUtil {
             String params = "mobile=" + user.getPhone() + "&password=" + MD5Util.inputPassToFormPass(PASSWORD);
             out.write(params.getBytes());
             out.flush();
-
             // 生成token
             InputStream inputStream = httpURLConnection.getInputStream();
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -70,7 +68,7 @@ public class UserUtil {
             bout.close();
             String response = new String(bout.toByteArray());
             JSONObject jo = JSON.parseObject(response);
-            String token = jo.getString("data");// data为edu.uestc.controller.result.Result中的字段
+            String token = jo.getString("data");
             System.out.println("create token : " + user.getPhone());
             // 将token写入文件中，用于压测时模拟客户端登录时发送的token
             String row = user.getPhone() + "," + token;
@@ -95,6 +93,7 @@ public class UserUtil {
             user.setLoginCount(1);
             user.setNickname("user-" + i);
             user.setRegisterDate(new Date());
+            user.setHead("headPicture");
             user.setSalt("1a2b3c4d");
             user.setPassword(MD5Util.inputPassToDbPass(PASSWORD, user.getSalt()));
             users.add(user);
@@ -111,16 +110,18 @@ public class UserUtil {
     private static void insertUserToDB(List<UserPO> users) throws Exception {
         System.out.println("start create user...");
         Connection conn = getConn();
-        String sql = "INSERT INTO miaosha_user(login_count, nickname, register_date, salt, password, id)VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO `seckill`.`seckill_user`(`phone`, `nickname`, `password`, `salt`, `head`, `register_date`,`login_count`) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         for (int i = 0; i < users.size(); i++) {
             UserPO user = users.get(i);
-            pstmt.setInt(1, user.getLoginCount());
+            pstmt.setLong(1, user.getPhone());
             pstmt.setString(2, user.getNickname());
-            pstmt.setTimestamp(3, new Timestamp(user.getRegisterDate().getTime()));
+            pstmt.setString(3, user.getPassword());
             pstmt.setString(4, user.getSalt());
-            pstmt.setString(5, user.getPassword());
-            pstmt.setLong(6, user.getPhone());
+            pstmt.setString(5, user.getHead());
+            pstmt.setTimestamp(6, new Timestamp(user.getRegisterDate().getTime()));
+            pstmt.setInt(7, user.getLoginCount());
             pstmt.addBatch();
         }
         pstmt.executeBatch();
@@ -145,7 +146,7 @@ public class UserUtil {
         return DriverManager.getConnection(url, username, password);
     }
 
-//    public static void main(String[] args) throws IOException {
-//        createUser(5000);
-//    }
+    public static void main(String[] args) throws Exception {
+        createUser(5000);
+    }
 }

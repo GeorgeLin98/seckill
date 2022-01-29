@@ -46,5 +46,12 @@ public class OrderServiceImpl  implements IOrderService {
         seckillOrderMapper.insert(seckillGood);
     }
 
+    @Override
+    public OrderPO getOrderById(long orderId) {
+        QueryWrapper<OrderPO> wrapper = new QueryWrapper<>();
+        wrapper.eq("id",orderId);
+        return orderMapper.selectOne(wrapper);
+    }
+
 
 }

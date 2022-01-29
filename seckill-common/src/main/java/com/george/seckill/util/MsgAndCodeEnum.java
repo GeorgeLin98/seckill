@@ -24,7 +24,9 @@ public enum MsgAndCodeEnum {
      * 商品订单模块 5003XX
      */
     EMPTY_STOCK(500300,"库存不足"),
-    REPEAT_ERROR(500301,"该商品每人限购一件");
+    REPEAT_ERROR(500301,"该商品每人限购一件"),
+    ORDER_NOT_EXIST(500302,"订单不存在");
+
 
 
     MsgAndCodeEnum(int code, String msg) {

@@ -7,18 +7,14 @@ import com.george.seckill.api.user.pojo.LoginVO;
 import com.george.seckill.api.user.pojo.RegisterVO;
 import com.george.seckill.api.user.pojo.UserPO;
 import com.george.seckill.api.user.service.IUserService;
-import com.george.seckill.api.user.util.UserUtil;
 import com.george.seckill.exception.GlobalException;
 import com.george.seckill.mapper.UserMapper;
-import com.george.seckill.util.CookieUtil;
 import com.george.seckill.util.MD5Util;
 import com.george.seckill.util.MsgAndCodeEnum;
 import com.george.seckill.util.UUIDUtil;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -85,7 +81,7 @@ public class UserServiceImpl implements IUserService {
         // 生成cookie
         String cookieId = UUIDUtil.uuid();
         //对象信息存入redis
-        redisService.set(cookieId,userPO, CacheUtil.COOKIE_CACHE_TIME);
+        redisService.set(cookieId,userPO, CacheUtil.DEFAULT_CACHE_TIME);
         return cookieId;
     }
 

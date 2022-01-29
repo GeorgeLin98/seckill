@@ -44,11 +44,11 @@ public class SecondKillController {
     IOrderService orderService;
 
     @RequestMapping(value = "doSeckill")
-    public String doSeckill(Model model, UserPO user, long goodsId) {
+    @ResponseBody
+    public ResponseVO<String > doSeckill(UserPO user, long goodsId) {
         if(null == user){
-            return "login";
+            return ResponseVO.fail();
         }
-        model.addAttribute("user",user);
         //查看库存是否足够
         GoodVO goodVO = goodsService.getGoodsVoByGoodsId(goodsId);
         if(goodVO.getStockCount() < 1){
@@ -59,9 +59,8 @@ public class SecondKillController {
         if(repeatBuy){
             throw new GlobalException(MsgAndCodeEnum.REPEAT_ERROR.getCode(),MsgAndCodeEnum.REPEAT_ERROR.getMsg());
         }
+        //秒杀
         OrderPO orderPO = secondKillService.seckill(user,goodVO);
-        model.addAttribute("order",orderPO);
-        model.addAttribute("goods",goodVO);
-        return "order_detail";
+        return ResponseVO.success(String.valueOf(orderPO.getId()));
     }
 }

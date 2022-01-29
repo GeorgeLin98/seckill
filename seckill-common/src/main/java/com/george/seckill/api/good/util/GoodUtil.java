@@ -1,4 +1,4 @@
-package com.george.seckill.api.good;
+package com.george.seckill.api.good.util;
 
 /**
  * @description 商品工具类
@@ -26,5 +26,9 @@ public class GoodUtil {
      * 秒杀进行中的剩余时间
      */
     public static int SECOND_KILLING_TIME =0;
+    /**
+     * 商品列表缓存
+     */
+    public static String GOOD_LIST_KEY ="goodList";
 
 }

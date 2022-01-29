@@ -9,5 +9,5 @@ public class CacheUtil {
     /**
      * Cookie的缓存时间
      */
-    public static final long COOKIE_CACHE_TIME = 60*60*2;
+    public static final long DEFAULT_CACHE_TIME = 60*60*2;
 }
