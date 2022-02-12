@@ -34,7 +34,8 @@ public interface IGoodService {
     /**
      * @description 更新秒杀商品库存
      * @param seckillGoodPO
+     * @return
      */
-    void updateSecGoodStock(SeckillGoodPO seckillGoodPO);
+    Integer updateSecGoodStock(SeckillGoodPO seckillGoodPO);
 
 }

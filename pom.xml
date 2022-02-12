@@ -15,6 +15,7 @@
         <module>seckill-good</module>
         <module>seckill-cache</module>
         <module>seckill-order</module>
+        <module>seckill-mq</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -30,5 +30,8 @@ public class GoodUtil {
      * 商品列表缓存
      */
     public static String GOOD_LIST_KEY ="goodList";
-
+    /**
+     * 商品库存初始化key
+     */
+    public static String GOOD_STOCK_KEY ="goodStock_%s";
 }
