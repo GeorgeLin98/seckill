@@ -17,4 +17,12 @@ public interface ISecondKillService {
      * @return
      */
     OrderPO seckill(UserPO user, GoodVO goodVO);
+    /**
+     * @description 查询秒杀结果
+     * @param uuid
+     * @param goodsId
+     * @return
+     */
+    Long getResult(UserPO user, long goodsId);
+
 }

@@ -66,4 +66,19 @@ public class SecondKillServiceImpl implements ISecondKillService {
         redisService.set(String.format(OrderUtil.ORDER_KEY, user.getPhone(),goodVO.getId()),1, CacheUtil.DEFAULT_CACHE_TIME);
         return orderPO;
     }
+
+    @Override
+    public Long getResult(UserPO user, long goodsId) {
+        Long result = orderService.getResult(user.getUuid(), goodsId);
+        if(null != result){
+            //返回订单id
+            return result;
+        }else if(false){
+            //秒杀失败
+
+        }else{
+            //排队中
+            return 0L;
+        }
+    }
 }

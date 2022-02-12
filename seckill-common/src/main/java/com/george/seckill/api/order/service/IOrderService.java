@@ -35,4 +35,12 @@ public interface IOrderService {
      * @return
      */
     OrderPO getOrderById(long orderId);
+
+    /**
+     * @description 查询秒杀结果
+     * @param uuid
+     * @param goodsId
+     * @return
+     */
+    Long getResult(Long uuid, long goodsId);
 }

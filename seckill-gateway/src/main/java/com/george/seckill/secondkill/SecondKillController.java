@@ -91,6 +91,22 @@ public class SecondKillController implements InitializingBean {
     }
 
     /**
+     * @description 返回秒杀结果： orderId：成功， -1：失败，0：排队中
+     * @param user
+     * @param goodsId
+     * @return
+     */
+    @RequestMapping(value = "result")
+    @ResponseBody
+    public ResponseVO<Long> getResult(UserPO user, long goodsId) {
+        if(null == user){
+            return ResponseVO.fail();
+        }
+        Long orderId = secondKillService.getResult(user,goodsId);
+        return ResponseVO.success(orderId);
+    }
+
+    /**
      * @description 初始化库存
      * @throws Exception
      */
