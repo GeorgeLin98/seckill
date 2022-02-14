@@ -5,6 +5,7 @@ import com.george.seckill.api.cache.util.CacheUtil;
 import com.george.seckill.api.good.pojo.GoodVO;
 import com.george.seckill.api.good.pojo.SeckillGoodPO;
 import com.george.seckill.api.good.service.IGoodService;
+import com.george.seckill.api.good.util.GoodUtil;
 import com.george.seckill.api.order.pojo.OrderPO;
 import com.george.seckill.api.order.pojo.SeckillOrderPO;
 import com.george.seckill.api.order.service.IOrderService;
@@ -73,9 +74,9 @@ public class SecondKillServiceImpl implements ISecondKillService {
         if(null != result){
             //返回订单id
             return result;
-        }else if(false){
+        }else if(null == redisService.get(String.format(GoodUtil.GOOD_RESULT_KEY,user.getPhone(),goodsId), Integer.class)){
             //秒杀失败
-
+            return -1L;
         }else{
             //排队中
             return 0L;

@@ -1,8 +1,10 @@
 package com.george.seckill.receiver;
 
 import com.george.seckill.api.cache.service.IRedisService;
+import com.george.seckill.api.cache.util.CacheUtil;
 import com.george.seckill.api.good.pojo.GoodVO;
 import com.george.seckill.api.good.service.IGoodService;
+import com.george.seckill.api.good.util.GoodUtil;
 import com.george.seckill.api.mq.pojo.SeckillMessageVO;
 import com.george.seckill.api.order.util.OrderUtil;
 import com.george.seckill.api.secondkill.service.ISecondKillService;
@@ -38,6 +40,8 @@ public class MqConsumer {
         SeckillMessageVO seckillMessageVO = JsonUtil.stringToBean(message, SeckillMessageVO.class);
         UserPO user = seckillMessageVO.getUser();
         long goodsId = seckillMessageVO.getGoodsId();
+        //设置结果
+        redisService.set(String.format(GoodUtil.GOOD_RESULT_KEY,user.getPhone(),goodsId),1, CacheUtil.DEFAULT_CACHE_TIME);
         //查询商品数据
         GoodVO goodVO = goodsService.getGoodsVoByGoodsId(goodsId);
         //判断库存
