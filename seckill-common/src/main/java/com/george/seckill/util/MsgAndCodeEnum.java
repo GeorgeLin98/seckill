@@ -1,5 +1,7 @@
 package com.george.seckill.util;
 
+import com.george.seckill.exception.GlobalException;
+
 /**
  * @descritpion 状态码与信息返回类
  * @date 2021.01.11
@@ -25,7 +27,9 @@ public enum MsgAndCodeEnum {
      */
     EMPTY_STOCK(500300,"库存不足"),
     REPEAT_ERROR(500301,"该商品每人限购一件"),
-    ORDER_NOT_EXIST(500302,"订单不存在");
+    ORDER_NOT_EXIST(500302,"订单不存在"),
+    VERITF_FAIL(500303,"验证码验证失败"),
+    ERROR_PATH(500304,"秒杀地址错误");
 
 
 

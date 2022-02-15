@@ -12,7 +12,9 @@ import com.george.seckill.api.order.service.IOrderService;
 import com.george.seckill.api.order.util.OrderUtil;
 import com.george.seckill.api.secondkill.service.ISecondKillService;
 import com.george.seckill.api.user.pojo.UserPO;
+import com.george.seckill.util.MD5Util;
 import com.george.seckill.util.SnowFlakeUtil;
+import com.george.seckill.util.UUIDUtil;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,5 +83,23 @@ public class SecondKillServiceImpl implements ISecondKillService {
             //排队中
             return 0L;
         }
+    }
+
+    @Override
+    public String createPath(UserPO user, long goodsId) {
+        //设置秒杀地址
+        String uuid = UUIDUtil.uuid();
+        String path = MD5Util.md5(uuid);
+        redisService.set(String.format(GoodUtil.SECKILL_PATH_KEY,user.getPhone(),goodsId),path,CacheUtil.DEFAULT_CACHE_TIME);
+        return path;
+    }
+
+    @Override
+    public boolean checkPath(UserPO user, long goodsId, String path) {
+        if(null == user || goodsId < 0 || null == path){
+            return false;
+        }
+        String redisPath = redisService.get(String.format(GoodUtil.SECKILL_PATH_KEY, user.getPhone(), goodsId), String.class);
+        return redisPath.equals(path);
     }
 }

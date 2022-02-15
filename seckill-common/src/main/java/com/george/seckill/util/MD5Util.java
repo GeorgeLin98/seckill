@@ -19,7 +19,7 @@ public class MD5Util {
      * @param password
      * @return
      */
-    private static String md5(String password){
+    public static String md5(String password){
         return DigestUtils.md2Hex(password);
     }
 

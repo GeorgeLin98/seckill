@@ -19,10 +19,26 @@ public interface ISecondKillService {
     OrderPO seckill(UserPO user, GoodVO goodVO);
     /**
      * @description 查询秒杀结果
-     * @param uuid
+     * @param user
      * @param goodsId
      * @return
      */
     Long getResult(UserPO user, long goodsId);
 
+    /**
+     * @decriptin 创建秒杀地址
+     * @param user
+     * @param goodsId
+     * @return
+     */
+    String createPath(UserPO user, long goodsId);
+
+    /**
+     * @description 检测秒杀地址
+     * @param user
+     * @param goodsId
+     * @param path
+     * @return
+     */
+    boolean checkPath(UserPO user, long goodsId, String path);
 }

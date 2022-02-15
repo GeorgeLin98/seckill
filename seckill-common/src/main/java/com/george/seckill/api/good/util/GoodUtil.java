@@ -38,4 +38,8 @@ public class GoodUtil {
      * 商品库存初始化key
      */
     public static String GOOD_RESULT_KEY ="goodResult_%s_%s";
+    /**
+     * 商品秒杀地址
+     */
+    public static String SECKILL_PATH_KEY ="seckillPath_%s_%s";
 }

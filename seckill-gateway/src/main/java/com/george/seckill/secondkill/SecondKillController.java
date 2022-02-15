@@ -15,7 +15,9 @@ import com.george.seckill.api.user.pojo.UserPO;
 import com.george.seckill.exception.GlobalException;
 import com.george.seckill.pojo.ResponseVO;
 import com.george.seckill.util.JsonUtil;
+import com.george.seckill.util.MD5Util;
 import com.george.seckill.util.MsgAndCodeEnum;
+import com.george.seckill.util.UUIDUtil;
 import org.apache.dubbo.config.annotation.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -55,11 +60,22 @@ public class SecondKillController implements InitializingBean {
     @Reference(interfaceClass = IMqProviderService.class)
     IMqProviderService mqProviderService;
 
-    @RequestMapping(value = "doSeckill")
+    /**
+     * @description 秒杀接口
+     * @param user
+     * @param goodsId
+     * @return
+     */
+    @RequestMapping(value = "/{path}/doSeckill")
     @ResponseBody
-    public ResponseVO<Integer> doSeckill(UserPO user, long goodsId) {
+    public ResponseVO<Integer> doSeckill(UserPO user, long goodsId,@PathVariable("path") String path) {
         if(null == user){
             return ResponseVO.fail();
+        }
+        //验证地址是否正确
+        boolean isPathTrue = secondKillService.checkPath(user,goodsId,path);
+        if(!isPathTrue){
+            throw new GlobalException(MsgAndCodeEnum.ERROR_PATH.getCode(),MsgAndCodeEnum.ERROR_PATH.getMsg());
         }
         //预减库存
         long stock = redisService.decr(String.format(GoodUtil.GOOD_STOCK_KEY, goodsId));
@@ -104,6 +120,39 @@ public class SecondKillController implements InitializingBean {
         }
         Long orderId = secondKillService.getResult(user,goodsId);
         return ResponseVO.success(orderId);
+    }
+
+    /**
+     * @description 获取秒杀地址
+     * @param user
+     * @param goodsId
+     * @return
+     */
+    @RequestMapping(value = "path", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseVO<String> getPath(UserPO user, long goodsId) {
+        if(null == user){
+            return ResponseVO.fail();
+        }
+        String path = secondKillService.createPath(user, goodsId);
+        // 向客户端回传随机生成的秒杀地址
+        return ResponseVO.success(path);
+    }
+
+    /**
+     * @description 获取验证码
+     * @param response
+     * @param user
+     * @param goodsId
+     * @return
+     */
+    @RequestMapping(value = "verifyCode", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseVO<String> getVerifyCode(HttpServletResponse response, UserPO user,long goodsId) {
+        if(null == user || goodsId < 0){
+            return ResponseVO.fail();
+        }
+        return ResponseVO.success();
     }
 
     /**
