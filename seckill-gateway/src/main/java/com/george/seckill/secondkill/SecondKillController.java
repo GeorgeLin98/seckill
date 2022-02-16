@@ -73,7 +73,7 @@ public class SecondKillController implements InitializingBean {
      */
     @RequestMapping(value = "/{path}/doSeckill")
     @ResponseBody
-    public ResponseVO<Integer> doSeckill(UserPO user, long goodsId,@PathVariable("path") String path,String verifyCode) {
+    public ResponseVO<Integer> doSeckill(UserPO user, long goodsId,@PathVariable("path") String path) {
         if(null == user){
             return ResponseVO.fail();
         }
@@ -81,11 +81,6 @@ public class SecondKillController implements InitializingBean {
         boolean isPathTrue = secondKillService.checkPath(user,goodsId,path);
         if(!isPathTrue){
             throw new GlobalException(MsgAndCodeEnum.ERROR_PATH.getCode(),MsgAndCodeEnum.ERROR_PATH.getMsg());
-        }
-        //验证验证码是否正确
-        boolean isCodeTrue = secondKillService.checkVerifyCode(user,goodsId,verifyCode);
-        if(!isCodeTrue){
-            throw new GlobalException(MsgAndCodeEnum.ERROR_CODE.getCode(),MsgAndCodeEnum.ERROR_CODE.getMsg());
         }
         //预减库存
         long stock = redisService.decr(String.format(GoodUtil.GOOD_STOCK_KEY, goodsId));
@@ -140,9 +135,14 @@ public class SecondKillController implements InitializingBean {
      */
     @RequestMapping(value = "path", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseVO<String> getPath(UserPO user, long goodsId) {
+    public ResponseVO<String> getPath(UserPO user, long goodsId,String verifyCode) {
         if(null == user){
             return ResponseVO.fail();
+        }
+        //验证验证码是否正确
+        boolean isCodeTrue = secondKillService.checkVerifyCode(user,goodsId,verifyCode);
+        if(!isCodeTrue){
+            throw new GlobalException(MsgAndCodeEnum.ERROR_CODE.getCode(),MsgAndCodeEnum.ERROR_CODE.getMsg());
         }
         String path = secondKillService.createPath(user, goodsId);
         // 向客户端回传随机生成的秒杀地址
