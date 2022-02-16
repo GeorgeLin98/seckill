@@ -79,6 +79,10 @@
             </exclusions>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+        </dependency>
         <!--rabbitmq依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

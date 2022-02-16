@@ -41,4 +41,13 @@ public interface ISecondKillService {
      * @return
      */
     boolean checkPath(UserPO user, long goodsId, String path);
+
+    /**
+     * @description 验证验证码是否正确
+     * @param user
+     * @param goodsId
+     * @param verifyCode
+     * @return
+     */
+    boolean checkVerifyCode(UserPO user, long goodsId, String verifyCode);
 }

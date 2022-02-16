@@ -29,7 +29,8 @@ public enum MsgAndCodeEnum {
     REPEAT_ERROR(500301,"该商品每人限购一件"),
     ORDER_NOT_EXIST(500302,"订单不存在"),
     VERITF_FAIL(500303,"验证码验证失败"),
-    ERROR_PATH(500304,"秒杀地址错误");
+    ERROR_PATH(500304,"秒杀地址错误"),
+    ERROR_CODE(500304,"验证码错误");
 
 
 

@@ -102,4 +102,13 @@ public class SecondKillServiceImpl implements ISecondKillService {
         String redisPath = redisService.get(String.format(GoodUtil.SECKILL_PATH_KEY, user.getPhone(), goodsId), String.class);
         return redisPath.equals(path);
     }
+
+    @Override
+    public boolean checkVerifyCode(UserPO user, long goodsId, String verifyCode) {
+        if(null == user || goodsId < 0 || null == verifyCode){
+            return false;
+        }
+        String redisCode = redisService.get(String.format(GoodUtil.SECKILL_CAPTCHA_KEY, user.getPhone(), goodsId), String.class);
+        return redisCode.equals(verifyCode);
+    }
 }

@@ -41,6 +41,7 @@
         <fastjson.version>1.2.38</fastjson.version>
         <top-version>1.0.0</top-version>
         <commons-pool2.version>2.6.2</commons-pool2.version>
+        <captcha.version>1.6.2</captcha.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -176,6 +177,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons-pool2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${captcha.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

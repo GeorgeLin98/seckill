@@ -86,20 +86,16 @@
         var goodsId = $("#goodsId").val();
         g_showLoading();
         $.ajax({
-            // url: "/seckill/path",
-            url: "/seckill/doSeckill",
+            url: "/seckill/path",
             type: "GET",
             data: {
                 goodsId: goodsId,
-                // verifyCode: $("#verifyCode").val() // 获取验证码的值
+                verifyCode: $("#verifyCode").val() // 获取验证码的值
             },
             success: function (data) {
                 if (data.code == 0) {
-                    // var path = dat
-                    // a.data;// 获取服务端返回的秒杀地址
-                    // doSeckill(path);// 真正做秒杀的接口
-                    // getSkResult($("#goodsId").val());
-                    window.location.href = "/order_detail.htm?orderId=" + data.data;
+                    var path = data.data;// 获取服务端返回的秒杀地址
+                    doSeckill(path);// 真正做秒杀的接口
                 } else {
                     layer.msg(data.msg);
                 }
@@ -121,16 +117,7 @@
             success: function (data) {
                 if (data.code == 0) {
                     //window.location.href="/order_detail.htm?orderId="+data.data.id;
-                    // getSkResult($("#goodsId").val());
-                    layer.confirm("恭喜你，秒杀成功！查看订单？", {btn: ["确定", "取消"]},
-                        // 确定的回调
-                        function () {
-                            window.location.href = "/order_detail.htm?orderId=" + data.data;
-                        },
-                        // 取消的回调
-                        function () {
-                            layer.closeAll();
-                        });
+                    getSkResult($("#goodsId").val());
                 } else {
                     layer.msg(data.msg);
                 }
@@ -163,7 +150,7 @@
                         layer.confirm("恭喜你，秒杀成功！查看订单？", {btn: ["确定", "取消"]},
                             // 确定的回调
                             function () {
-                                window.location.href = "order_detail.htm?orderId=" + result;
+                                window.location.href = "/order_detail.htm?orderId=" + result;
                             },
                             // 取消的回调
                             function () {

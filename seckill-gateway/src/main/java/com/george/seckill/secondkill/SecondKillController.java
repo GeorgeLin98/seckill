@@ -18,6 +18,9 @@ import com.george.seckill.util.JsonUtil;
 import com.george.seckill.util.MD5Util;
 import com.george.seckill.util.MsgAndCodeEnum;
 import com.george.seckill.util.UUIDUtil;
+import com.wf.captcha.ArithmeticCaptcha;
+import com.wf.captcha.SpecCaptcha;
+import com.wf.captcha.base.Captcha;
 import org.apache.dubbo.config.annotation.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -68,7 +73,7 @@ public class SecondKillController implements InitializingBean {
      */
     @RequestMapping(value = "/{path}/doSeckill")
     @ResponseBody
-    public ResponseVO<Integer> doSeckill(UserPO user, long goodsId,@PathVariable("path") String path) {
+    public ResponseVO<Integer> doSeckill(UserPO user, long goodsId,@PathVariable("path") String path,String verifyCode) {
         if(null == user){
             return ResponseVO.fail();
         }
@@ -76,6 +81,11 @@ public class SecondKillController implements InitializingBean {
         boolean isPathTrue = secondKillService.checkPath(user,goodsId,path);
         if(!isPathTrue){
             throw new GlobalException(MsgAndCodeEnum.ERROR_PATH.getCode(),MsgAndCodeEnum.ERROR_PATH.getMsg());
+        }
+        //验证验证码是否正确
+        boolean isCodeTrue = secondKillService.checkVerifyCode(user,goodsId,verifyCode);
+        if(!isCodeTrue){
+            throw new GlobalException(MsgAndCodeEnum.ERROR_CODE.getCode(),MsgAndCodeEnum.ERROR_CODE.getMsg());
         }
         //预减库存
         long stock = redisService.decr(String.format(GoodUtil.GOOD_STOCK_KEY, goodsId));
@@ -148,11 +158,25 @@ public class SecondKillController implements InitializingBean {
      */
     @RequestMapping(value = "verifyCode", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseVO<String> getVerifyCode(HttpServletResponse response, UserPO user,long goodsId) {
+    public void getVerifyCode(HttpServletResponse response, UserPO user,long goodsId) {
         if(null == user || goodsId < 0){
-            return ResponseVO.fail();
+            throw new GlobalException(MsgAndCodeEnum.FAIL.getCode(),MsgAndCodeEnum.FAIL.getMsg());
         }
-        return ResponseVO.success();
+        // 设置请求头为输出图片类型
+        response.setContentType("image/gif");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        //数字类型,三个参数分别为宽、高、位数
+        ArithmeticCaptcha specCaptcha = new ArithmeticCaptcha(130, 48,5);
+        // 验证码存入redis
+        redisService.set(String.format(GoodUtil.SECKILL_CAPTCHA_KEY,user.getPhone(),goodsId),specCaptcha.text(),CacheUtil.DEFAULT_CACHE_TIME);
+        // 输出图片流
+        try {
+            specCaptcha.out(response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
