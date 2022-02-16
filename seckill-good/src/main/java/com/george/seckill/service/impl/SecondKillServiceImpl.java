@@ -72,7 +72,7 @@ public class SecondKillServiceImpl implements ISecondKillService {
 
     @Override
     public Long getResult(UserPO user, long goodsId) {
-        Long result = orderService.getResult(user.getUuid(), goodsId);
+        Long result = orderService.getResult(user.getPhone(), goodsId);
         if(null != result){
             //返回订单id
             return result;

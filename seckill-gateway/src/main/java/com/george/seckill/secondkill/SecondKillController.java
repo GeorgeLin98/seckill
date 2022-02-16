@@ -119,12 +119,12 @@ public class SecondKillController implements InitializingBean {
      */
     @RequestMapping(value = "result")
     @ResponseBody
-    public ResponseVO<Long> getResult(UserPO user, long goodsId) {
+    public ResponseVO<String> getResult(UserPO user, long goodsId) {
         if(null == user){
             return ResponseVO.fail();
         }
         Long orderId = secondKillService.getResult(user,goodsId);
-        return ResponseVO.success(orderId);
+        return ResponseVO.success(String.valueOf(orderId));
     }
 
     /**
@@ -168,7 +168,7 @@ public class SecondKillController implements InitializingBean {
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         //数字类型,三个参数分别为宽、高、位数
-        ArithmeticCaptcha specCaptcha = new ArithmeticCaptcha(130, 48,5);
+        ArithmeticCaptcha specCaptcha = new ArithmeticCaptcha(130, 32,3);
         // 验证码存入redis
         redisService.set(String.format(GoodUtil.SECKILL_CAPTCHA_KEY,user.getPhone(),goodsId),specCaptcha.text(),CacheUtil.DEFAULT_CACHE_TIME);
         // 输出图片流

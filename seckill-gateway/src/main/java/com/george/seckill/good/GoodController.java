@@ -50,7 +50,7 @@ public class GoodController {
      * @param user  通过自定义参数解析器UserArgumentResolver解析的 UserPO 对象
      * @return
      */
-    @RequestMapping(value = "goodsList")
+    @RequestMapping(value = "goodsList",produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String goodsList(HttpServletRequest request,HttpServletResponse response, UserPO user, Model model) {
         // 从redis缓存中取html
