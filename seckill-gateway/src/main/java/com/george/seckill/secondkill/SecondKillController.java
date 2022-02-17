@@ -1,5 +1,6 @@
 package com.george.seckill.secondkill;
 
+import com.george.seckill.annotation.AccessLimit;
 import com.george.seckill.api.cache.service.IRedisService;
 import com.george.seckill.api.cache.util.CacheUtil;
 import com.george.seckill.api.good.pojo.GoodVO;
@@ -71,6 +72,7 @@ public class SecondKillController implements InitializingBean {
      * @param goodsId
      * @return
      */
+    @AccessLimit(seconds = 5,maxAccessCount = 5,needLogin = true)
     @RequestMapping(value = "/{path}/doSeckill")
     @ResponseBody
     public ResponseVO<Integer> doSeckill(UserPO user, long goodsId,@PathVariable("path") String path) {

@@ -39,11 +39,15 @@ public class GoodUtil {
      */
     public static String GOOD_RESULT_KEY ="goodResult_%s_%s";
     /**
-     * 商品秒杀地址
+     * 商品秒杀地址key
      */
     public static String SECKILL_PATH_KEY ="seckillPath_%s_%s";
     /**
-     * 商品秒杀验证码
+     * 商品秒杀验证码key
      */
     public static String SECKILL_CAPTCHA_KEY ="seckillCaptcha_%s_%s";
+    /**
+     * 商品秒杀限流key
+     */
+    public static String CURRENT_LIMITING_KEY ="currentLimiting_%s_%s";
 }

@@ -1,5 +1,6 @@
 package com.george.seckill.resolver;
 
+import com.george.seckill.annotation.UserContext;
 import com.george.seckill.api.cache.service.IRedisService;
 import com.george.seckill.api.cache.util.CacheUtil;
 import com.george.seckill.api.user.pojo.UserPO;
@@ -38,20 +39,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-        //获取cookie值
-        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        HttpServletResponse response = nativeWebRequest.getNativeRequest(HttpServletResponse.class);
-        String cookieId = CookieUtil.readLoginToken(request, UserUtil.COOKIE_NAME_TOKEN);
-        if(StringUtils.isEmpty(cookieId)){
-            return null;
-        }
-        //从缓存中查找
-        UserPO userPO = redisService.get(cookieId, UserPO.class);
-//        //在有效期内从redis获取到key之后，需要将key重新设置一下，从而达到延长有效期的效果
-//        if (userPO != null) {
-//            redisService.set(cookieId,userPO, CacheUtil.COOKIE_CACHE_TIME);
-//            CookieUtil.writeLoginToken(response,cookieId,UserUtil.COOKIE_NAME_TOKEN);
-//        }
-        return userPO;
+        //从线程Map中获取
+        UserPO user = UserContext.getUser();
+        return user;
     }
 }

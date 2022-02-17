@@ -30,7 +30,8 @@ public enum MsgAndCodeEnum {
     ORDER_NOT_EXIST(500302,"订单不存在"),
     VERITF_FAIL(500303,"验证码验证失败"),
     ERROR_PATH(500304,"秒杀地址错误"),
-    ERROR_CODE(500304,"验证码错误");
+    ERROR_CODE(500305,"验证码错误"),
+    ACCESS_LIMIT_REACHED(500306,"请求过于频繁");
 
 
 
