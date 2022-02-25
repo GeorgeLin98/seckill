@@ -39,6 +39,10 @@ public class SeckillGoodPO implements Serializable {
      * 秒杀结束时间
      */
     private Date endDate;
+    /**
+     * 版本号
+     */
+    private int version;
 
     public Long getId() {
         return id;
@@ -86,5 +90,13 @@ public class SeckillGoodPO implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }
