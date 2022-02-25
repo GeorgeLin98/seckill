@@ -41,3 +41,7 @@
 4、rabbit-mq
 5、dubbo
 6、zookeeper
+
+四、文件
+压测脚本
+sql
